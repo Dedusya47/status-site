@@ -38,6 +38,7 @@
 </div>
 
 <script>
+    // Ваша новая и актуальная ссылка на бэкенд Google Apps Script
     const WEB_APP_URL = 'https://google.com'; 
     
     let selectedStatus = "";
@@ -76,22 +77,21 @@
             reason: reasonText
         };
 
-        // Включили режим 'no-cors' для обхода блокировок браузера
+        // Запрос отправляется в режиме no-cors для 100% совместимости
         fetch(WEB_APP_URL, {
             method: 'POST',
-            mode: 'no-cors', 
+            mode: 'no-cors',
             cache: 'no-cache',
             headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify(payload)
         })
         .then(() => {
-            // В режиме no-cors браузер не выдает текст ответа бэкенда, 
-            // поэтому мы сразу выводим успех, так как запрос гарантированно улетел
             msgDiv.style.color = 'green';
             msgDiv.innerText = "Данные отправлены!";
             document.getElementById('reason').value = "";
             selectedStatus = "";
             document.querySelectorAll('.status-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('sendBtn').disabled = true;
         })
         .catch(err => {
             msgDiv.style.color = 'red';
