@@ -122,7 +122,6 @@
 </div>
 
 <script>
-  // Твоя ссылка на Google Apps Script
   const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwsSrfkDuBZP2bw596TDAkSB7ie5LCjI66_ynwSer6-PLo8hBZIcbi7y_Y7eL-FpaztcQ/exec';
 
   let selectedStatus = '';
@@ -174,7 +173,6 @@
       msgDiv.style.color = 'green';
       msgDiv.innerText = 'Данные успешно отправлены!';
       
-      // Очищаем форму
       document.getElementById('reason').value = '';
       selectedStatus = '';
       document.querySelectorAll('.status-btn').forEach(btn => btn.classList.remove('active'));
@@ -187,111 +185,6 @@
       sendBtn.disabled = false;
     });
   }
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Отправка статуса</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-        h2 { color: #333; margin-bottom: 20px; }
-        input[type="text"] { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 15px; font-size: 14px; }
-        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .status-btn { padding: 12px; border: 2px solid #ddd; border-radius: 6px; background: #fff; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .status-btn:hover { border-color: #0088cc; color: #0088cc; }
-        .status-btn.active { background: #0088cc; color: white; border-color: #0088cc; }
-        textarea { width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ccc; border-radius: 6px; resize: none; margin-bottom: 20px; font-size: 14px; }
-        .submit-btn { width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
-        .submit-btn:disabled { background: #ccc; cursor: not-allowed; }
-        #message { margin-top: 15px; font-weight: bold; }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h2>Выберите статус</h2>
-    <input type="text" id="username" placeholder="Ваше имя" value="Пользователь сайта">
-    
-    <div class="btn-group">
-        <button class="status-btn" onclick="selectStatus('УП')">УП</button>
-        <button class="status-btn" onclick="selectStatus('Б')">Б</button>
-        <button class="status-btn" onclick="selectStatus('НП')">НП</button>
-        <button class="status-btn" onclick="selectStatus('ОТ')">ОТ</button>
-    </div>
-
-    <textarea id="reason" rows="3" placeholder="Напишите причину..."></textarea>
-    <button class="submit-btn" id="sendBtn" onclick="sendData()" disabled>Отправить</button>
-    <div id="message"></div>
-</div>
-
-<script>
-    // НОВАЯ ССЫЛКА НА БЭКЕНД УЖЕ ТУТ
-    const WEB_APP_URL = 'https://google.com'; 
-    
-    let selectedStatus = "";
-
-    function selectStatus(status) {
-        selectedStatus = status;
-        document.querySelectorAll('.status-btn').forEach(btn => {
-            btn.classList.remove('active');
-            if(btn.innerText === status) btn.classList.add('active');
-        });
-        checkForm();
-    }
-
-    document.getElementById('reason').addEventListener('input', checkForm);
-    document.getElementById('username').addEventListener('input', checkForm);
-
-    function checkForm() {
-        const reasonText = document.getElementById('reason').value.trim();
-        const nameText = document.getElementById('username').value.trim();
-        document.getElementById('sendBtn').disabled = !(selectedStatus && reasonText && nameText);
-    }
-
-    function sendData() {
-        const nameText = document.getElementById('username').value.trim();
-        const reasonText = document.getElementById('reason').value.trim();
-        const msgDiv = document.getElementById('message');
-        const sendBtn = document.getElementById('sendBtn');
-        
-        sendBtn.disabled = true;
-        msgDiv.style.color = '#333';
-        msgDiv.innerText = "Отправка данных...";
-
-        const payload = {
-            userName: nameText,
-            status: selectedStatus,
-            reason: reasonText
-        };
-
-        // Настроен безопасный no-cors fetch для отправки на новый Apps Script
-        fetch(WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            cache: 'no-cache',
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(payload)
-        })
-        .then(() => {
-            msgDiv.style.color = 'green';
-            msgDiv.innerText = "Данные успешно отправлены!";
-            document.getElementById('reason').value = "";
-            selectedStatus = "";
-            document.querySelectorAll('.status-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('sendBtn').disabled = true;
-        })
-        .catch(err => {
-            msgDiv.style.color = 'red';
-            msgDiv.innerText = "Ошибка сети при отправке!";
-            console.error(err);
-            sendBtn.disabled = false;
-        });
-    }
 </script>
 
 </body>
